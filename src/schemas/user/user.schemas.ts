@@ -20,6 +20,9 @@ export class User extends Document {
 
   @Prop({ required: true })
   phone: string;
+
+  @Prop()
+  refreshToken?: string; // added this field for storing refreshToken
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
