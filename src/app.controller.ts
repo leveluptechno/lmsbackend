@@ -7,6 +7,8 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    return this.appService.getHello();
+    console.log(process.env.MONGODB_URI);
+
+    return 'hello world';
   }
 }
