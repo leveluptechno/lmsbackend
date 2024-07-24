@@ -3,8 +3,7 @@ import { AuthService } from '../service/auth.service';
 
 @Controller('auth')
 export class AuthController {
-
-  constructor(private readonly authService: AuthService){}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('signup')
   async registerUser(
@@ -12,17 +11,23 @@ export class AuthController {
     @Body('email') email: string,
     @Body('password') password: string,
     @Body('confirmPassword') confirmPassword: string,
-    @Body('phone') phone: string
+    @Body('phone') phone: string,
   ) {
-    return this.authService.signup(name, email, password, confirmPassword, phone);
+    return this.authService.signup(
+      name,
+      email,
+      password,
+      confirmPassword,
+      phone,
+    );
   }
 
   @Post('login')
   async loginUser(
-    @Body('email')email: string,
-    @Body('password')password: string
+    @Body('email') email: string,
+    @Body('password') password: string,
   ) {
-    return this.authService.login(email,password);
+    return this.authService.login(email, password);
   }
 
   @Post('forgot-password')
@@ -30,4 +35,9 @@ export class AuthController {
 
   @Post('reset-password')
   async resetPassword() {}
+
+  @Post('refresh-token')
+  async refreshToken(@Body('refreshToken') refreshToken: string) {
+    return this.authService.refreshToken(refreshToken);
+  }
 }
