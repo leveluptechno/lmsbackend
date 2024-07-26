@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { errorMessage, successMessage } from 'src/utils/response.util';
+import { LoginUserDto } from 'src/dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -18,21 +19,18 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signup(
-    createUserDto: CreateUserDto
-  ) {
-
-    const {name, password, email, phone, confirmPassword} = createUserDto;
+  async signup(createUserDto: CreateUserDto) {
+    const { name, password, email, phone, confirmPassword } = createUserDto;
 
     if (password !== confirmPassword) {
-      throw new BadRequestException('Passwords do not match');
+      throw errorMessage.passwordMismatch;
     }
 
     //now check if the user already exist or not
 
-    const existingUser = await this.userModel.findOne({email});
+    const existingUser = await this.userModel.findOne({ email });
 
-    if(existingUser) {
+    if (existingUser) {
       throw errorMessage.userAlreadyExists;
     }
 
@@ -50,29 +48,39 @@ export class AuthService {
     return successMessage.userCreated;
   }
 
-  async login(email: string, password: string) {
+  async login(loginUserDto: LoginUserDto) {
+    const { email, password } = loginUserDto;
+
     const user = await this.userModel.findOne({ email });
+    // console.log(user);
 
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw errorMessage.userNotFound;
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+      throw errorMessage.unauthorizedError;
     }
 
     const payload = { email: user.email, sub: user._id };
     const accessToken = this.jwtService.sign(payload);
 
-    
-    await user.save();
-
-    return {
-      accessToken,
-      message: 'Login successful',
+    const userResponse = {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
     };
+
+    const result = {
+      msg: successMessage.userLoggedIn,
+      user: userResponse,
+      accessToken,
+    };
+
+    return result;
   }
 
   async validateUser() {}
@@ -80,6 +88,4 @@ export class AuthService {
   async forgotPassword() {}
 
   async resetPassword() {}
-
-  
 }

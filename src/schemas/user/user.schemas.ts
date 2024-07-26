@@ -20,7 +20,6 @@ export class User extends Document {
 
   @Prop({ required: true })
   phone: string;
-
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,4 +1,9 @@
-import { IsString, IsNotEmpty, IsEmail, IsOptional } from '@nestjs/class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsEmail,
+  IsOptional,
+} from '@nestjs/class-validator';
 
 export class UpdateUserProfileDto {
   @IsString()
