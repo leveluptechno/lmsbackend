@@ -20,6 +20,12 @@ export class User extends Document {
 
   @Prop({ required: true })
   phone: string;
+
+  @Prop()
+  resetToken?: string; // for reset password
+
+  @Prop()
+  resetTokenExpires?: Date; // Token expire time
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

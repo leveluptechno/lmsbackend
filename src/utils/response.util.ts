@@ -17,6 +17,10 @@ export const successMessage = {
     message: 'User deleted successfully',
     statusCode: HttpStatus.OK,
   },
+  passwordReset: {
+    message: 'Password reset successfully',
+    statusCode: HttpStatus.OK,
+  },
 };
 
 export const errorMessage = {
