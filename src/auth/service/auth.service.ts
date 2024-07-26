@@ -8,6 +8,8 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from 'src/schemas/user/user.schemas';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { CreateUserDto } from 'src/dto/create-user.dto';
+import { errorMessage, successMessage } from 'src/utils/response.util';
 
 @Injectable()
 export class AuthService {
@@ -17,14 +19,21 @@ export class AuthService {
   ) {}
 
   async signup(
-    name: string,
-    email: string,
-    password: string,
-    confirmPassword: string,
-    phone: string,
+    createUserDto: CreateUserDto
   ) {
+
+    const {name, password, email, phone, confirmPassword} = createUserDto;
+
     if (password !== confirmPassword) {
       throw new BadRequestException('Passwords do not match');
+    }
+
+    //now check if the user already exist or not
+
+    const existingUser = await this.userModel.findOne({email});
+
+    if(existingUser) {
+      throw errorMessage.userAlreadyExists;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -38,7 +47,7 @@ export class AuthService {
     });
 
     await newUser.save();
-    return { message: 'User registered successfully' };
+    return successMessage.userCreated;
   }
 
   async login(email: string, password: string) {
@@ -56,15 +65,12 @@ export class AuthService {
 
     const payload = { email: user.email, sub: user._id };
     const accessToken = this.jwtService.sign(payload);
-    const refreshToken = this.jwtService.sign(payload, { expiresIn: '7d' });
 
-    user.refreshToken = refreshToken;
-
+    
     await user.save();
 
     return {
       accessToken,
-      refreshToken,
       message: 'Login successful',
     };
   }
@@ -75,33 +81,5 @@ export class AuthService {
 
   async resetPassword() {}
 
-  async refreshToken(refreshToken: string) {
-    try {
-      const decoded = this.jwtService.verify(refreshToken);
-      const user = await this.userModel.findOne({
-        _id: decoded.sub,
-        refreshToken,
-      });
-
-      if (!user) {
-        throw new UnauthorizedException('Invalid refresh token');
-      }
-
-      const payload = { email: user.email, sub: user._id };
-      const newAccessToken = this.jwtService.sign(payload);
-      const newRefreshToken = this.jwtService.sign(payload, {
-        expiresIn: '7d',
-      });
-
-      user.refreshToken = newRefreshToken;
-      await user.save();
-
-      return {
-        accessToken: newAccessToken,
-        refreshToken: newAccessToken,
-      };
-    } catch (error) {
-      throw new UnauthorizedException('Invalid refresh token');
-    }
-  }
+  
 }
