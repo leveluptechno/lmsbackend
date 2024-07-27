@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, MinLength } from '@nestjs/class-validator';
+import { IsString, MinLength } from '@nestjs/class-validator';
 
 export class ResetPasswordDto {
   @IsString()
