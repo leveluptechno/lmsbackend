@@ -21,6 +21,10 @@ export const successMessage = {
     message: 'Password reset successfully',
     statusCode: HttpStatus.OK,
   },
+  profileUpdated: {
+    message: 'Profile updated successfully',
+    statusCode: HttpStatus.OK,
+  },
 };
 
 export const errorMessage = {
