@@ -59,7 +59,7 @@ export class AuthService {
     const { email, password } = loginUserDto;
 
     const user = await this.userModel.findOne({ email });
-    console.log(user);
+    // console.log(user);
 
     if (!user) {
       throw errorMessage.userNotFound;
