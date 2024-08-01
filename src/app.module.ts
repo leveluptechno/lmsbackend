@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
+import { PsychometricAssessmentModule } from './psychometric-assessment/psychometric-assessment.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { JwtModule } from '@nestjs/jwt';
       secret: process.env.ACCESS_TOKEN_SECRET || 'sgysdgsy',
       signOptions: { expiresIn: '1d' },
     }),
+    PsychometricAssessmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
