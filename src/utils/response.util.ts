@@ -25,6 +25,14 @@ export const successMessage = {
     message: 'Profile updated successfully',
     statusCode: HttpStatus.OK,
   },
+  assessmentTaken: {
+    message: 'Assessment taken successfully',
+    statusCode: HttpStatus.CREATED,
+  },
+  assessmentFetched: {
+    message: 'Assessment results fetched successfully',
+    statusCode: HttpStatus.OK,
+  },
 };
 
 export const errorMessage = {
@@ -60,5 +68,9 @@ export const errorMessage = {
   internalServerError: {
     message: 'Internal server error',
     statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+  },
+  assessmentNotFound: {
+    message: 'No assessments found for the user',
+    statusCode: HttpStatus.NOT_FOUND,
   },
 };
