@@ -33,6 +33,22 @@ export const successMessage = {
     message: 'Assessment results fetched successfully',
     statusCode: HttpStatus.OK,
   },
+  faqCreated: {
+    message: 'FAQ created successfully',
+    statusCode: HttpStatus.CREATED,
+  },
+  faqUpdated: {
+    message: 'FAQ updated successfully',
+    statusCode: HttpStatus.OK,
+  },
+  faqDeleted: {
+    message: 'FAQ deleted successfully',
+    statusCode: HttpStatus.OK,
+  },
+  faqFetched: {
+    message: 'FAQs fetched successfully',
+    statusCode: HttpStatus.OK,
+  },
 };
 
 export const errorMessage = {
@@ -71,6 +87,10 @@ export const errorMessage = {
   },
   assessmentNotFound: {
     message: 'No assessments found for the user',
+    statusCode: HttpStatus.NOT_FOUND,
+  },
+  faqNotFound: {
+    message: 'FAQ not found',
     statusCode: HttpStatus.NOT_FOUND,
   },
 };

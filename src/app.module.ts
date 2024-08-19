@@ -7,6 +7,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PsychometricAssessmentModule } from './psychometric-assessment/psychometric-assessment.module';
+import { ResourcesModule } from './resources/resources.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { PsychometricAssessmentModule } from './psychometric-assessment/psychome
       signOptions: { expiresIn: '1d' },
     }),
     PsychometricAssessmentModule,
+    ResourcesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
