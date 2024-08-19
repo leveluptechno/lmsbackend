@@ -16,22 +16,27 @@ export class FaqController {
   constructor(private readonly faqService: FaqService) {}
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.faqService.findAll();
   }
 
+  @Get(':id')
+  async findById(@Param('id') id: string) {
+    return this.faqService.findById(id);
+  }
+
   @Post() //admin
-  create(@Body() createFaqDto: CreateFaqDto) {
+  async create(@Body() createFaqDto: CreateFaqDto) {
     return this.faqService.create(createFaqDto);
   }
 
   @Put(':id') //admin
-  update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
+  async update(@Param('id') id: string, @Body() updateFaqDto: UpdateFaqDto) {
     return this.faqService.update(id, updateFaqDto);
   }
 
   @Delete(':id') //admin
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.faqService.remove(id);
   }
 }
