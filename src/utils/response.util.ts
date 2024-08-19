@@ -25,6 +25,30 @@ export const successMessage = {
     message: 'Profile updated successfully',
     statusCode: HttpStatus.OK,
   },
+  assessmentTaken: {
+    message: 'Assessment taken successfully',
+    statusCode: HttpStatus.CREATED,
+  },
+  assessmentFetched: {
+    message: 'Assessment results fetched successfully',
+    statusCode: HttpStatus.OK,
+  },
+  faqCreated: {
+    message: 'FAQ created successfully',
+    statusCode: HttpStatus.CREATED,
+  },
+  faqUpdated: {
+    message: 'FAQ updated successfully',
+    statusCode: HttpStatus.OK,
+  },
+  faqDeleted: {
+    message: 'FAQ deleted successfully',
+    statusCode: HttpStatus.OK,
+  },
+  faqFetched: {
+    message: 'FAQs fetched successfully',
+    statusCode: HttpStatus.OK,
+  },
 };
 
 export const errorMessage = {
@@ -60,5 +84,13 @@ export const errorMessage = {
   internalServerError: {
     message: 'Internal server error',
     statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+  },
+  assessmentNotFound: {
+    message: 'No assessments found for the user',
+    statusCode: HttpStatus.NOT_FOUND,
+  },
+  faqNotFound: {
+    message: 'FAQ not found',
+    statusCode: HttpStatus.NOT_FOUND,
   },
 };

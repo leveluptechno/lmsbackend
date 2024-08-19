@@ -108,7 +108,7 @@ export class AuthService {
     user.resetTokenExpires = resetTokenExpires;
     await user.save();
 
-    const resetUrl = `https://localhost:3000/auth/reset-password?token=${resetToken}`;
+    const resetUrl = `http://localhost:3000/auth/reset-password?token=${resetToken}`;
 
     await this.transporter.sendMail({
       to: email,
