@@ -30,7 +30,7 @@ export class AuthService {
     const { name, password, email, phone, confirmPassword } = createUserDto;
 
     if (password !== confirmPassword) {
-      throw errorMessage.passwordMismatch;
+      return errorMessage.passwordMismatch;
     }
 
     //now check if the user already exist or not
@@ -38,7 +38,7 @@ export class AuthService {
     const existingUser = await this.userModel.findOne({ email });
 
     if (existingUser) {
-      throw errorMessage.userAlreadyExists;
+      return errorMessage.userAlreadyExists;
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -49,6 +49,7 @@ export class AuthService {
       password: hashedPassword,
       confirmPassword: hashedPassword,
       phone,
+      role: 'user', // default role for everyone is a 'user'
     });
 
     await newUser.save();
@@ -62,16 +63,16 @@ export class AuthService {
     // console.log(user);
 
     if (!user) {
-      throw errorMessage.userNotFound;
+      return errorMessage.userNotFound;
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-      throw errorMessage.unauthorizedError;
+      return errorMessage.unauthorizedError;
     }
 
-    const payload = { email: user.email, sub: user._id };
+    const payload = { email: user.email, sub: user._id, role: user.role }; // return role here in token
     const accessToken = this.jwtService.sign(payload);
 
     const userResponse = {
@@ -98,7 +99,7 @@ export class AuthService {
     const user = await this.userModel.findOne({ email });
 
     if (!user) {
-      throw errorMessage.userNotFound;
+      return errorMessage.userNotFound;
     }
 
     const resetToken = crypto.randomUUID().toString();
@@ -108,6 +109,7 @@ export class AuthService {
     user.resetTokenExpires = resetTokenExpires;
     await user.save();
 
+    // frontend url for reset password page with token as a query param
     const resetUrl = `http://localhost:3000/auth/reset-password?token=${resetToken}`;
 
     await this.transporter.sendMail({
@@ -123,7 +125,7 @@ export class AuthService {
     const { newPassword } = resetPasswordDto;
 
     if (!token) {
-      throw errorMessage.invalidAuthToken;
+      return errorMessage.invalidAuthToken;
     }
 
     const user = await this.userModel.findOne({
@@ -132,7 +134,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw errorMessage.invalidAuthToken;
+      return errorMessage.invalidAuthToken;
     }
 
     user.password = await bcrypt.hash(newPassword, 10);
