@@ -1,6 +1,6 @@
 import { Controller, Post, Get, Body, UseGuards, Req } from '@nestjs/common';
 import { PsychometricAssessmentService } from '../service/psychometric-assessment.service';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 
 @Controller('psychometric-assessment')
 export class PsychometricAssessmentController {
