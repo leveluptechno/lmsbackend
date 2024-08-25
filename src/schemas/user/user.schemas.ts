@@ -1,4 +1,3 @@
-//src/user/user.schem.ts
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -22,7 +21,14 @@ export class User extends Document {
   phone: string;
 
   @Prop()
-  refreshToken?: string; // added this field for storing refreshToken
+  resetToken?: string; // for reset password
+
+  @Prop()
+  resetTokenExpires?: Date; // Token expire time
+
+  // add roles
+  @Prop({ required: true, enum: ['user', 'admin'], default: 'user' })
+  role: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
