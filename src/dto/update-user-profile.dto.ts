@@ -20,4 +20,12 @@ export class UpdateUserProfileDto {
   @IsNotEmpty()
   @IsOptional()
   phone?: string;
+
+  @IsString()
+  @IsOptional()
+  address?: string;
+
+  @IsString()
+  @IsOptional()
+  city?: string;
 }

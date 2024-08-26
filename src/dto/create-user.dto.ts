@@ -25,4 +25,10 @@ export class CreateUserDto {
   @IsString()
   @IsNotEmpty()
   phone: string;
+
+  @IsString()
+  address: string;
+
+  @IsString()
+  city: string;
 }
