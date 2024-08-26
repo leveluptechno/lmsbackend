@@ -27,7 +27,8 @@ export class AuthService {
   ) {}
 
   async signup(createUserDto: CreateUserDto) {
-    const { name, password, email, phone, confirmPassword } = createUserDto;
+    const { name, password, email, phone, confirmPassword, address, city } =
+      createUserDto;
 
     if (password !== confirmPassword) {
       return errorMessage.passwordMismatch;
@@ -50,6 +51,8 @@ export class AuthService {
       confirmPassword: hashedPassword,
       phone,
       role: 'user', // default role for everyone is a 'user'
+      address,
+      city,
     });
 
     await newUser.save();
@@ -122,10 +125,14 @@ export class AuthService {
   }
 
   async resetPassword(resetPasswordDto: ResetPasswordDto, token: string) {
-    const { newPassword } = resetPasswordDto;
+    const { newPassword, confirmPassword } = resetPasswordDto;
 
     if (!token) {
       return errorMessage.invalidAuthToken;
+    }
+
+    if (newPassword !== confirmPassword) {
+      return errorMessage.passwordMismatch;
     }
 
     const user = await this.userModel.findOne({

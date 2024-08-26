@@ -21,6 +21,12 @@ export class User extends Document {
   phone: string;
 
   @Prop()
+  address: string;
+
+  @Prop()
+  city: string;
+
+  @Prop()
   resetToken?: string; // for reset password
 
   @Prop()
