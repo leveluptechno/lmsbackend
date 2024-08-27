@@ -6,10 +6,15 @@ import {
   Delete,
   Param,
   Body,
+  UseInterceptors,
+  UploadedFile,
+  Req,
 } from '@nestjs/common';
 import { BlogService } from '../service/blog.service';
-import { CreateBlogDto } from 'src/dto/blog/create-blog.dto';
-import { UpdateBlogDto } from 'src/dto/blog/update-blog.dto';
+import { CreateBlogDto } from 'src/dto/resources/blog/create-blog.dto';
+import { UpdateBlogDto } from 'src/dto/resources/blog/update-blog.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { storage } from 'src/middleware/multer.middleware';
 
 @Controller('blog')
 export class BlogController {
@@ -26,16 +31,25 @@ export class BlogController {
   }
 
   @Post() // admin
-  async create(@Body() createBlogDto: CreateBlogDto) {
-    return this.blogService.create(createBlogDto);
+  @UseInterceptors(FileInterceptor('blogImage', { storage }))
+  async create(
+    @Body() createBlogDto: CreateBlogDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.blogService.create(createBlogDto, file);
   }
 
-  @Put(':id') //admin
-  async update(@Param('id') id: string, @Body() updateBlogDto: UpdateBlogDto) {
-    return this.blogService.update(id, updateBlogDto);
+  @Put(':id') // admin
+  @UseInterceptors(FileInterceptor('blogImage', { storage }))
+  async update(
+    @Param('id') id: string,
+    @Body() updateBlogDto: UpdateBlogDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.blogService.update(id, updateBlogDto, file);
   }
 
-  @Delete(':id') //admin
+  @Delete(':id') // admin
   async remove(@Param('id') id: string) {
     return this.blogService.remove(id);
   }

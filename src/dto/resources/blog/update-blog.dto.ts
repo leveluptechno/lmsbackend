@@ -1,11 +1,19 @@
-import { IsString, IsOptional } from '@nestjs/class-validator';
+import { IsOptional, IsString } from '@nestjs/class-validator';
 
 export class UpdateBlogDto {
-  @IsString()
   @IsOptional()
-  readonly title?: string;
+  @IsString()
+  heading?: string;
 
-  @IsString()
   @IsOptional()
-  readonly content?: string;
+  @IsString()
+  subHeading?: string;
+
+  @IsOptional()
+  @IsString()
+  content?: string;
+
+  @IsOptional()
+  @IsString()
+  blogImage?: string;
 }
