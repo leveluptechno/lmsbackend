@@ -1,11 +1,19 @@
-import { IsNotEmpty, IsString } from '@nestjs/class-validator';
+import { IsNotEmpty, IsOptional, IsString } from '@nestjs/class-validator';
 
 export class CreateBlogDto {
-  @IsString()
   @IsNotEmpty()
-  readonly title: string;
+  @IsString()
+  heading: string;
+
+  @IsOptional()
+  @IsString()
+  subHeading?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  content: string;
 
   @IsString()
-  @IsNotEmpty()
-  readonly content: string;
+  @IsOptional()
+  blogImage: string;
 }
