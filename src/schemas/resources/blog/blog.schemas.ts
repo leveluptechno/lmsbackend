@@ -3,11 +3,17 @@ import { Document } from 'mongoose';
 
 @Schema()
 export class Blog extends Document {
-  @Prop({ required: true })
-  title: string;
+  @Prop({ required: true, trim: true })
+  heading: string;
+
+  @Prop({ default: '' })
+  subHeading: string;
 
   @Prop({ required: true })
   content: string;
+
+  @Prop({ required: true })
+  blogImage: string;
 
   @Prop({ default: Date.now })
   createdAt: Date;

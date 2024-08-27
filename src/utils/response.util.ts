@@ -49,6 +49,26 @@ export const successMessage = {
     message: 'FAQs fetched successfully',
     statusCode: HttpStatus.OK,
   },
+  blogsFetched: {
+    message: "Blog's fetched successfully",
+    statusCode: HttpStatus.OK,
+  },
+  blogFetched: {
+    message: 'Blog fetched successfully',
+    statusCode: HttpStatus.OK,
+  },
+  blogCreated: {
+    message: 'Blog created successfully',
+    statusCode: HttpStatus.CREATED,
+  },
+  blogUpdated: {
+    message: 'Blog updated successfully',
+    statusCode: HttpStatus.OK,
+  },
+  blogDeleted: {
+    message: 'Blog deleted successfully',
+    statusCode: HttpStatus.OK,
+  },
 };
 
 export const errorMessage = {
@@ -92,5 +112,25 @@ export const errorMessage = {
   faqNotFound: {
     message: 'FAQ not found',
     statusCode: HttpStatus.NOT_FOUND,
+  },
+  blogNotFound: {
+    message: 'Blog not found',
+    statusCode: HttpStatus.NOT_FOUND,
+  },
+  imageUploadFailed: {
+    message: 'Failed to upload image',
+    statusCode: HttpStatus.BAD_REQUEST,
+  },
+  blogCreationFailed: {
+    message: 'Failed to create blog',
+    statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+  },
+  blogUpdatationFailed: {
+    message: 'Failed to update blog',
+    statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
+  },
+  blogDeletionFailed: {
+    message: 'Failed to delete blog',
+    statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
   },
 };
