@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateFaqDto } from 'src/dto/faq/create-faq.dto';
-import { UpdateFaqDto } from 'src/dto/faq/update-faq.dto';
+import { CreateFaqDto } from 'src/dto/resources/faq/create-faq.dto';
+import { UpdateFaqDto } from 'src/dto/resources/faq/update-faq.dto';
+
 import { Faq } from 'src/schemas/resources/faq/faq.schemas';
 import { errorMessage, successMessage } from 'src/utils/response.util';
 
