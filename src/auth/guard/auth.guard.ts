@@ -1,6 +1,10 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { errorMessage } from 'src/utils/response.util';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,22 +15,31 @@ export class AuthGuard implements CanActivate {
     const token = this.extractTokenFromHeader(request);
 
     if (!token) {
-      throw errorMessage.invalidAuthToken;
+      throw new UnauthorizedException('Authentication token is missing.');
     }
 
+    console.log('Secret:', process.env.ACCESS_TOKEN_SECRET);
+    console.log('Token:', token);
+
     try {
-      const payload = this.jwtService.verify(token);
-      // console.log(payload);
+      console.log('Token:', token); // Log the token to see its value
+      const payload = this.jwtService.verify(token, {
+        secret: process.env.ACCESS_TOKEN_SECRET,
+      });
+      console.log('Payload:', payload); // Log the decoded payload
       request['user'] = payload;
-      // console.log('Authenticated User:', request['user']);
     } catch (error) {
-      throw errorMessage.invalidAuthToken;
+      console.log('Verification Error:', error.message); // Log the error message
+      throw new UnauthorizedException('Invalid authentication token.');
     }
 
     return true;
   }
-  extractTokenFromHeader(request: Request): string | undefined {
+
+  private extractTokenFromHeader(request: Request): string | undefined {
     const authorizationHeader = request.headers['authorization'];
+    console.log('Authorization Header:', authorizationHeader); // Log the header value
+
     if (!authorizationHeader) return undefined;
 
     const [type, token] = authorizationHeader.split(' ');

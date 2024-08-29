@@ -15,12 +15,12 @@ import { ResourcesModule } from './resources/resources.module';
     MongooseModule.forRoot(process.env.MONGODB_URI),
     UserModule,
     AuthModule,
-    JwtModule.register({
-      secret: process.env.ACCESS_TOKEN_SECRET || 'sgysdgsy',
-      signOptions: { expiresIn: '1d' },
-    }),
     PsychometricAssessmentModule,
     ResourcesModule,
+    JwtModule.register({
+      secret: process.env.ACCESS_TOKEN_SECRET || 'sgysdgsy',
+      signOptions: { expiresIn: '1d', algorithm: 'HS256' },
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],

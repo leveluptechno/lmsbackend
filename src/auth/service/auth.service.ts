@@ -76,7 +76,9 @@ export class AuthService {
     }
 
     const payload = { email: user.email, sub: user._id, role: user.role }; // return role here in token
-    const accessToken = this.jwtService.sign(payload);
+    const accessToken = this.jwtService.sign(payload, {
+      secret: process.env.ACCESS_TOKEN_SECRET,
+    });
 
     const userResponse = {
       id: user._id,

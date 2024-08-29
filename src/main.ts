@@ -14,6 +14,7 @@ async function bootstrap() {
     origin: '*',
     credentials: true,
   });
+  console.log('ACCESS_TOKEN_SECRET:', process.env.ACCESS_TOKEN_SECRET);
   await app.listen(4000);
 }
 bootstrap();
