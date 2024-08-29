@@ -1,6 +1,10 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  ForbiddenException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { errorMessage } from 'src/utils/response.util';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -19,9 +23,10 @@ export class RolesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user = request['user'];
 
-    console.log('User object:', user);
-    if (!requiredRoles.includes(user.role)) {
-      throw errorMessage.unauthorizedError;
+    if (!user || !user.role || !requiredRoles.includes(user.role)) {
+      throw new ForbiddenException(
+        'You do not have the necessary permissions.',
+      );
     }
 
     return true;
