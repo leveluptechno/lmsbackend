@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PsychometricAssessmentModule } from './psychometric-assessment/psychometric-assessment.module';
 import { ResourcesModule } from './resources/resources.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ResourcesModule } from './resources/resources.module';
     AuthModule,
     PsychometricAssessmentModule,
     ResourcesModule,
+    AdminModule,
     JwtModule.register({
       secret: process.env.ACCESS_TOKEN_SECRET || 'sgysdgsy',
       signOptions: { expiresIn: '1d', algorithm: 'HS256' },

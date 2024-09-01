@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schemas/user/user.schemas';
+import { AssignmentModule } from './assignment/assignment.module';
+import { TrainerModule } from './trainer/trainer.module';
 
 @Module({
   imports: [
@@ -10,6 +12,8 @@ import { User, UserSchema } from 'src/schemas/user/user.schemas';
         schema: UserSchema,
       },
     ]),
+    AssignmentModule,
+    TrainerModule,
   ],
   providers: [],
   controllers: [],
