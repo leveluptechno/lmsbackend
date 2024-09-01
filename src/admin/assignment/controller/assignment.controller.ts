@@ -6,7 +6,7 @@ import { AssignmentsService } from '../service/assignment.service';
 export class AssignmentsController {
   constructor(private readonly assignmentsService: AssignmentsService) {}
 
-  @Post()
+  @Post('create-assignment')
   async create(@Body() createAssignmentDto: CreateAssignmentDto) {
     return this.assignmentsService.create(createAssignmentDto);
   }
